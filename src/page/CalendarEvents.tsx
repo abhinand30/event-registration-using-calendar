@@ -48,7 +48,7 @@ const CalendarEvents = () => {
     const [showViewModal, setShowViewModal] = useState(false);
     const [selectedData, setSelectedData] = useState<FormModalProps | null>(null);
     const [currentDate,setCurrentDate]=useState<Date>(new Date);
-
+    
     const handleModal = () => {
         setShowFormModal(!showFormModal);
         setSelectedData(null);
@@ -77,7 +77,7 @@ const CalendarEvents = () => {
                 endAccessor="end"
                 style={{ height: 500, width: 700 }}
                 popup
-                onSelectEvent={(event) => {setSelectedData(event);handleViewModal() }}
+                onSelectEvent={(event:FormModalProps) => {setSelectedData(event);handleViewModal() }}
                 onNavigate={(date) => setCurrentDate(date)}
             />
 

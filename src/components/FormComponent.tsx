@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 import { checkValidation } from '../utils/util';
 import { eventForm } from "../utils/data";
 import type { FormModalProps } from '../utils/types';
-import moment from 'moment';
+
 
 interface formProps {
     setEvents: React.Dispatch<React.SetStateAction<FormModalProps[]>>
@@ -12,6 +13,7 @@ interface formProps {
     selectedData: FormModalProps | null;
     events: FormModalProps[]
 }
+
 const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedData, events }) => {
     const [formData, setFormData] = useState<FormModalProps | {}>(selectedData || {});
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -24,7 +26,7 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
                         rows={4}
                         placeholder={field.label}
                         name={field.name}
-                        value={formData[field.name] || ''}
+                        value={(formData as Record<string, any>)[field.name] || ''}
                         onChange={handleChange}
                         className="border-1 p-1"
                     />
@@ -36,7 +38,7 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
                     <input
                         placeholder={field.label}
                         name={field.name}
-                        value={field.type === 'date' ? moment(formData[field.name]??'').format('YYYY-MM-DD') : formData[field.name]}
+                        value={field.type === 'date' ? moment((formData as Record<string, any>)[field.name]??'').format('YYYY-MM-DD') : (formData as Record<string, any>)[field.name]}
                         type={field.type}
                         onChange={handleChange}
                         className="border-1 p-1"
@@ -53,14 +55,14 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
             ...prev,
             [name]: "",
         }));
-        let newError: Record<string, string> = {};
+        // let newError: Record<string, string> = {};
         let newValue: Record<string, string | null> = {};
         newValue[name] = value;
 
         if (type === "date") {
             const selectedDate = new Date(value);
             if (selectedDate < new Date()) {
-                newError[name] = "Date cannot in below of Current Date";
+                // newError[name] = "Date cannot in below of Current Date";
                 newValue[name] = null;
             }
             const updatedForm = { ...formData, ...newValue };
@@ -68,12 +70,12 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
             const endDate = updatedForm.end ? new Date(updatedForm.end) : null;
 
             if (startDate && endDate && startDate > endDate) {
-                newError["end"] = "End date cannot before start date";
+                // newError["end"] = "End date cannot before start date";
                 newValue["end"] = null;
             }
         }
 
-        setErrors((prev) => ({ ...prev, ...newError }));
+        // setErrors((prev) => ({ ...prev, ...newError }));
         setFormData((form) => ({ ...form, ...newValue }));
     };
 
@@ -87,7 +89,7 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
 
         const data = formData as FormModalProps;
         const newEvent = {
-            id: selectedData?.id || events.length,
+            id: selectedData?.id || events.length+1,
             title: data.title,
             description: data.description,
             start: new Date(data.start),
