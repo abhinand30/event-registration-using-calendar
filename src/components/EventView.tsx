@@ -7,7 +7,7 @@ const EventView = ({ selectedData, handleCloseModal, handleModal, onDeleteEvent 
             onDeleteEvent();
             handleCloseModal();
         } else {
-            console.log('Deletion cancelled.');
+            console.log('Deletion cancelled.')
         }
     }
     return (
@@ -22,7 +22,6 @@ const EventView = ({ selectedData, handleCloseModal, handleModal, onDeleteEvent 
                 <button className="btn bg-blue-500 text-white" onClick={() => { handleModal(); handleCloseModal() }}>Edit</button>
                 <button className="btn bg-red-500 text-white" onClick={() => { handleDelete() }}>Delete</button>
             </div>
-
         </div>
     )
 }

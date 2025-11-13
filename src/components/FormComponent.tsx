@@ -12,7 +12,7 @@ interface formProps {
     handleModal: () => void;
     selectedData: FormModalProps | null;
     events: FormModalProps[]
-}
+};
 
 const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedData, events }) => {
     const [formData, setFormData] = useState<FormModalProps | {}>(selectedData || {});
@@ -38,7 +38,7 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
                     <input
                         placeholder={field.label}
                         name={field.name}
-                        value={field.type === 'date' ? moment((formData as Record<string, any>)[field.name]??'').format('YYYY-MM-DD') : (formData as Record<string, any>)[field.name]}
+                        value={field.type === 'date' ? moment((formData as Record<string, any>)[field.name] ?? '').format('YYYY-MM-DD') : (formData as Record<string, any>)[field.name]}
                         type={field.type}
                         onChange={handleChange}
                         className="border-1 p-1"
@@ -89,7 +89,7 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
 
         const data = formData as FormModalProps;
         const newEvent = {
-            id: selectedData?.id || events.length+1,
+            id: selectedData?.id || events.length + 1,
             title: data.title,
             description: data.description,
             start: new Date(data.start),
@@ -107,12 +107,11 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
         }
         setFormData({});
         setErrors({});
-        handleModal();
+        handleModal()
     };
     return (
         <div>
-
-            <h2 className="header-title">{selectedData?'Update':'Create'} Event</h2>
+            <h2 className="header-title">{selectedData ? 'Update' : 'Create'} Event</h2>
             <form onSubmit={(e) => { handleSubmit(e) }} className="flex flex-col gap-2">
                 {eventForm.map((form, index) => (
                     <div key={index} className='flex flex-col'>
@@ -126,7 +125,7 @@ const FormComponent: React.FC<formProps> = ({ handleModal, setEvents, selectedDa
                         Close
                     </button>
                     <button className="btn bg-blue-500 text-white" type="submit">
-                        {selectedData?'Update':'Submit'}
+                        {selectedData ? 'Update' : 'Submit'}
                     </button>
                 </div>
             </form>
